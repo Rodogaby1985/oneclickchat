@@ -107,6 +107,7 @@ function OCWAORDER_plugin_init()
     require_once dirname(__FILE__) . '/includes/wa-gdpr.php';
     require_once dirname(__FILE__) . '/includes/wa-metabox.php';
     require_once dirname(__FILE__) . '/includes/multiple-numbers.php';
+    require_once dirname(__FILE__) . '/includes/class-wc-conditional-bank-transfer.php';
 
     // Make sure WooCommerce is active
     function OCWAORDER_check_woocommece_active()
@@ -258,3 +259,4 @@ function wa_order_get_shipping_address($customer)
 
     return implode("\r\n", $address_parts);
 }
+
