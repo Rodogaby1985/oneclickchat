@@ -258,5 +258,17 @@ function wa_order_get_shipping_address($customer)
     ));
 
     return implode("\r\n", $address_parts);
+   /**
+ * Agregar la nueva pasarela de pago a WooCommerce.
+ *
+ * @param array $gateways
+ * @return array
+ */
+function add_conditional_bank_transfer_gateway( $gateways ) {
+    $gateways[] = 'WC_Gateway_Conditional_Bank_Transfer';
+    return $gateways;
 }
+add_filter( 'woocommerce_payment_gateways', 'add_conditional_bank_transfer_gateway' ); 
+}
+
 
