@@ -4,23 +4,26 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 /**
+ /**
  * OneClick Chat to Order Admin Settings Page
  *
- * @package     OneClick Chat to Order
- * @author      Walter Pinem <hello@walterpinem.me>
- * @link        https://walterpinem.me/
- * @link        https://onlinestorekit.com/oneclick-chat-to-order/
- * @copyright   Copyright (c) 2019 - 2024, Walter Pinem | Online Store Kit
+ * @package     woo-pagos-bank-avanzados-order
+ * @author      Mobapp 
+ * @link        https://mobappexpress.com/
  * @license     http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v3.0
  * @category    Admin Page
  */
+ 
 
 // WA Number Post Type Submenu
 function wa_order_add_number_submenu()
 {
-    add_submenu_page('wa-order', 'OneClick Chat to Order Options', 'Global Settings', 'manage_options', 'admin.php?page=wa-order&tab=welcome');
+    
     add_submenu_page('wa-order', 'WhatsApp Numbers', 'WhatsApp Numbers', 'manage_options', 'edit.php?post_type=wa-order-numbers');
     add_submenu_page('wa-order', 'Add Number', 'Add New Number', 'manage_options', 'post-new.php?post_type=wa-order-numbers');
+	add_submenu_page('wa-order', 'OneClick Chat to Order Options', 'Global Settings', 'manage_options', 'admin.php?page=wa-order&tab=button_config');
+	add_submenu_page('wa-order', 'Bank cuentas multiples', 'Configurar cuentas Bancarias Multiples', 'manage_options', 'admin.php?page=wc-settings&tab=checkout&section=conditional_bank_transfer&from=WCADMIN_PAYMENT_SETTINGS');
+	
 };
 add_action('admin_menu', 'wa_order_add_number_submenu');
 // Build plugin admin setting page
@@ -425,7 +428,6 @@ function wa_order_create_admin_page()
         <h1><?php esc_html_e('OneClick Chat to Order', 'oneclick-wa-order'); ?></h1>
         <hr>
         <h2 class="nav-tab-wrapper">
-            <a href="?page=wa-order&tab=welcome" class="nav-tab <?php echo esc_attr($active_tab == 'welcome') ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Welcome', 'oneclick-wa-order'); ?></a>
             <a href="edit.php?post_type=wa-order-numbers" class="nav-tab <?php echo esc_attr($active_tab == 'phone-numbers') ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Numbers', 'oneclick-wa-order'); ?></a>
             <a href="?page=wa-order&tab=button_config" class="nav-tab <?php echo esc_attr($active_tab == 'button_config') ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Basic', 'oneclick-wa-order'); ?></a>
             <a href="?page=wa-order&tab=shop_page" class="nav-tab <?php echo esc_attr($active_tab == 'shop_page') ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Shop', 'oneclick-wa-order'); ?></a>
@@ -435,7 +437,7 @@ function wa_order_create_admin_page()
             <a href="?page=wa-order&tab=display_option" class="nav-tab <?php echo esc_attr($active_tab == 'display_option') ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Display', 'oneclick-wa-order'); ?></a>
             <a href="?page=wa-order&tab=gdpr_notice" class="nav-tab <?php echo esc_attr($active_tab == 'gdpr_notice') ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('GDPR', 'oneclick-wa-order'); ?></a>
             <a href="?page=wa-order&tab=generate_shortcode" class="nav-tab <?php echo esc_attr($active_tab == 'generate_shortcode') ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Shortcode', 'oneclick-wa-order'); ?></a>
-            <a href="?page=wa-order&tab=tutorial_support" class="nav-tab <?php echo esc_attr($active_tab == 'tutorial_support') ? 'nav-tab-active' : ''; ?>"><?php esc_html_e('Support', 'oneclick-wa-order'); ?></a>
+            
         </h2>
         <?php if ($active_tab == 'generate_shortcode') { ?>
             <?php wp_enqueue_script('wa_order_js_admin'); ?>
@@ -773,11 +775,10 @@ function wa_order_create_admin_page()
                     /* translators: 1. opening <a> tag with strong tag for "set it here", 2. closing </a> tag, 3. opening <a> tag with strong tag for "Learn more", 4. closing </a> tag. */
                     echo sprintf(
                         /* translators: 1: "set it here" link, 2: "Learn more" link */
-                        esc_html__('Make sure that you have added at least one WhatsApp number to dismiss the admin notice. Please %1$sset it here%2$s to get started. %3$sLearn more%4$s.', 'oneclick-wa-order'),
+                        esc_html__('Make sure that you have added at least one WhatsApp number to dismiss the admin notice. ', 'oneclick-wa-order'),
                         '<a href="edit.php?post_type=wa-order-numbers"><strong>',
                         '</strong></a>',
-                        '<a href="https://walterpinem.me/projects/oneclick-chat-to-order-mutiple-numbers-feature/?utm_source=admin-notice&utm_medium=admin-dashboard&utm_campaign=OneClick-Chat-to-Order" target="_blank"><strong>',
-                        '</strong></a>'
+                        
                     );
                     ?>
                     <br />
@@ -2851,226 +2852,12 @@ function wa_order_create_admin_page()
                 <hr>
                 <?php submit_button(); ?>
             </form>
-        <?php } elseif ($active_tab == 'tutorial_support') { ?>
-            <!-- Begin creating plugin admin page -->
-            <div class="wrap">
-                <div class="feature-section one-col wrap about-wrap">
-                    <div class="about-text">
-                        <h4><?php
-                            /* translators: 1. <strong> tag for "OneClick Chat to Order" */
-                            echo sprintf(
-                                /* translators: 1. opening <strong> tag */
-                                esc_html__('%1$sOneClick Chat to Order%2$s is Waiting for Your Feedback', 'oneclick-wa-order'),
-                                '<strong>', // opening <strong> tag
-                                '</strong>' // closing <strong> tag
-                            );
-                            ?></h4>
-                    </div>
-                    <div class="indo-about-description">
-                        <?php
-                        /* translators: 1. <strong> tag for "OneClick Chat to Order", 2. <a> tag with href to the review page, 3. closing </a> tag */
-                        echo sprintf(
-                            /* translators: 1. <strong> tag for "OneClick Chat to Order" */
-                            /* translators: 2. opening <a> tag for "leaving a review" */
-                            /* translators: 3. closing <a> tag */
-                            esc_html__('%1$sOneClick Chat to Order%2$s is my second plugin and it\'s open source. I acknowledge that there are still a lot to fix, here and there, that\'s why I really need your feedback. Let\'s get in touch and show some love by %3$sleaving a review%4$s.', 'oneclick-wa-order'),
-                            '<strong>', // opening <strong> tag
-                            '</strong>', // closing <strong> tag
-                            '<a href="https://wordpress.org/support/plugin/oneclick-whatsapp-order/reviews/?rate=5#new-post" target="_blank"><strong>', // opening <a> and <strong> tag
-                            '</strong></a>' // closing <a> and <strong> tag
-                        );
-                        ?>
-                    </div>
-                    <table class="tg" style="table-layout: fixed; width: 269px">
-                        <colgroup>
-                            <col style="width: 105px">
-                            <col style="width: 164px">
-                        </colgroup>
-                        <tr>
-                            <th class="tg-kiyi">
-                                <?php esc_html_e('Author:', 'oneclick-wa-order'); ?></th>
-                            <th class="tg-fymr">
-                                <?php esc_html_e('Walter Pinem', 'oneclick-wa-order'); ?></th>
-                        </tr>
-                        <tr>
-                            <td class="tg-kiyi">
-                                <?php esc_html_e('Website:', 'oneclick-wa-order'); ?></td>
-                            <td class="tg-fymr"><a href="https://walterpinem.me/" title="<?php esc_attr_e('Visit walterpinem.me', 'oneclick-wa-order'); ?>" target="_blank">
-                                    <?php esc_html_e('walterpinem.me', 'oneclick-wa-order'); ?></a></td>
-                        </tr>
-                        <tr>
-                            <td class="tg-kiyi">
-                            <td class="tg-fymr"><a href="https://walterpinem.com/" title="<?php esc_attr_e('Visit walterpinem.com', 'oneclick-wa-order'); ?>" target="_blank">
-                                    <?php esc_html_e('walterpinem.com', 'oneclick-wa-order'); ?></a></td>
-                        </tr>
-                        <tr>
-                            <td class="tg-kiyi">
-                            <td class="tg-fymr"><a href="https://www.onlinestorekit.com/" title="<?php esc_attr_e('Online Store Kit', 'oneclick-wa-order'); ?>" target="_blank">
-                                    <?php esc_html_e('Online Store Kit', 'oneclick-wa-order'); ?></a></td>
-                        </tr>
-                        <tr>
-                            <td class="tg-kiyi">
-                            <td class="tg-fymr"><a href="https://walterpinem.me/projects/tools/" title="<?php esc_attr_e('65+ Free Online Tools', 'oneclick-wa-order'); ?>" target="_blank">
-                                    <?php esc_html_e('65+ Free Online Tools', 'oneclick-wa-order'); ?></a></td>
-                        </tr>
-                        <tr>
-                            <td class="tg-kiyi">
-                                <?php esc_html_e('Email:', 'oneclick-wa-order'); ?></td>
-                            <td class="tg-fymr"><a href="mailto:hello@walterpinem.me" title="<?php esc_attr_e('Send email to hello@walterpinem.me', 'oneclick-wa-order'); ?>" target="_blank">
-                                    <?php esc_html_e('hello@walterpinem.me', 'oneclick-wa-order'); ?></a></td>
-                        </tr>
-                        <tr>
-                            <td class="tg-kiyi"><?php esc_html_e('More:', 'oneclick-wa-order'); ?></td>
-                            <td class="tg-fymr"><a href="https://youtu.be/LuURM5vZyB8" title="<?php esc_attr_e('Complete Youtube Tutorial', 'oneclick-wa-order'); ?>" target="_blank">
-                                    <?php esc_html_e('Complete Tutorial', 'oneclick-wa-order'); ?></a></td>
-                        </tr>
-                        <tr>
-                            <td class="tg-kiyi" rowspan="3"></td>
-                            <td class="tg-fymr"><a href="https://walterpinem.me/projects/contact/" title="<?php esc_attr_e('Support & Feature Request', 'oneclick-wa-order'); ?>" target="_blank">
-                                    <?php esc_html_e('Support & Feature Request', 'oneclick-wa-order'); ?></a></td>
-                        </tr>
-                        <tr>
-                            <td class="tg-kiyi" rowspan="3"></td>
-                            <td class="tg-fymr"><a href="https://www.paypal.me/WalterPinem" title="<?php esc_attr_e('Buy Me a Coffee?', 'oneclick-wa-order'); ?>" target="_blank">
-                                    <?php esc_html_e('Donate', 'oneclick-wa-order'); ?></a></td>
-                        </tr>
-                    </table>
-                    <br>
-                    <hr>
-                    <?php echo do_shortcode("[donate]"); ?>
-                    <center>
-                        <p><?php echo wp_kses_post("Created with ❤ and ☕ in Central Jakarta, Indonesia by <a href=\"https://walterpinem.me\" target=\"_blank\"><strong>Walter Pinem</strong></a>", 'oneclick-wa-order'); ?></p>
-                    </center>
-                </div>
-            </div>
-        <?php } elseif ($active_tab == 'welcome') { ?>
-            <!-- Begin creating plugin admin page -->
-            <div class="wrap">
-                <div class="feature-section one-col wrap about-wrap">
-                    <div class="indo-title-text">
-                        <h2><?php echo wp_kses_post('Thank you for using <br><strong>OneClick Chat to Order</strong>', 'oneclick-wa-order'); ?></h2>
-                        <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/images/oneclick-chat-to-order.png'); ?>" alt="<?php esc_attr_e('OneClick Chat to Order Logo', 'oneclick-wa-order'); ?>" />
-                    </div>
-                    <div class="feature-section one-col about-text">
-                        <h3><?php esc_html_e("Make It Easy for Customers to Reach You!", 'oneclick-wa-order'); ?></h3>
-                    </div>
-                    <div class="feature-section one-col indo-about-description">
-                        <p>
-                            <?php esc_html_e('OneClick Chat to Order will enable you to connect your WooCommerce-powered online store with WhatsApp and make it super quick and easy for your customers to complete their order via WhatsApp.', 'oneclick-wa-order'); ?>
-                        </p>
-                        <p>
-                            <a href="https://onlinestorekit.com/oneclick-chat-to-order/" target="_blank"><?php esc_html_e('Learn More', 'oneclick-wa-order'); ?></a>
-                        </p>
-                    </div>
-                    <div class="clear"></div>
-                    <hr>
-                    <div class="feature-section one-col about-text">
-                        <h4><?php echo wp_kses_post(__("<strong style=\"color:red;\">NEW!</strong> Build a Powerful Multi-Vendor Online Marketplace", 'oneclick-wa-order')); ?></h4>
-
-                    </div>
-                    <div class="feature-section one-col indo-about-description">
-                        <p>
-                            <?php esc_html_e('Seamlessly combine the power of WordPress & WooCommerce, OneClick Chat to Order, WCFM Marketplace, WCFM Frontend Manager and WhatsApp with the new and most requested add-on, OneClick WCFM Connector, that your vendors will love.', 'oneclick-wa-order'); ?>
-                        </p>
-                        <p>
-                            <?php esc_html_e('Help them increase their sales, increase your revenue.', 'oneclick-wa-order'); ?>
-                        </p>
-                        <p>
-                            <a href="https://onlinestorekit.com/oneclick-wcfm-connector/" target="_blank"><?php esc_html_e('Read Details', 'oneclick-wa-order'); ?></a>
-                        </p>
-                    </div>
-                    <div class="clear"></div>
-                    <hr />
-                    <div class="feature-section one-col">
-                        <h3 style="text-align: center;"><?php esc_html_e('Watch the Complete Overview and Tutorial', 'oneclick-wa-order'); ?></h3>
-                        <div class="headline-feature feature-video">
-                            <div class='embed-container'>
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?si=P4KW9wnME3q2Mqvj&amp;list=PLwazGJFvaLnBTOw4pNvPcsFW1ls4tn1Uj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                    <hr />
-                    <div class="feature-section one-col">
-                        <div class="indo-get-started">
-                            <h3><?php esc_html_e('Let\'s Get Started', 'oneclick-wa-order'); ?></h3>
-                            <ul>
-                                <li><strong><?php esc_html_e('Step #1:', 'oneclick-wa-order'); ?></strong> <?php esc_html_e('Start adding your WhatsApp number on WhatsApp Numbers post type. You can add unlimited numbers! Learn more or dismiss notice.', 'oneclick-wa-order'); ?></li>
-                                <li><strong><?php esc_html_e('Step #2:', 'oneclick-wa-order'); ?></strong> <?php esc_html_e('Show a fancy Floating Button with customized message and tooltip which you can customize easily on Floating Button setting panel.', 'oneclick-wa-order'); ?></li>
-                                <li><strong><?php esc_html_e('Step #3:', 'oneclick-wa-order'); ?></strong> <?php esc_html_e('Configure some options to display or hide buttons, including the WhatsApp button on Display Options setting panel.', 'oneclick-wa-order'); ?></li>
-                                <li><strong><?php esc_html_e('Step #4:', 'oneclick-wa-order'); ?></strong> <?php esc_html_e('Make your online store GDPR-ready by showing GDPR Notice right under the WhatsApp Order button on GDPR Notice setting panel.', 'oneclick-wa-order'); ?></li>
-                                <li><strong><?php esc_html_e('Step #5:', 'oneclick-wa-order'); ?></strong> <?php esc_html_e('Display WhatsApp button anywhere you like with a single shortcode. You can generate it with a customized message and a nice text on button on Generate Shortcode setting panel.', 'oneclick-wa-order'); ?></li>
-                                <li><strong><?php esc_html_e('Step #6:', 'oneclick-wa-order'); ?></strong> <?php esc_html_e('Have an inquiry? Find out how to reach me out on Support panel.', 'oneclick-wa-order'); ?></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="feature-section two-col">
-                        <div class="col">
-                            <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/images/simple-chat-button.png'); ?>" alt="<?php esc_attr_e('Simple Chat Button', 'oneclick-wa-order'); ?>" />
-                            <h3><?php esc_html_e('Simple Chat to Order Button', 'oneclick-wa-order'); ?></h3>
-                            <p><?php esc_html_e('Replace the default Add to Cart button or simply show both. Once the Chat to Order button is clicked, the message along with the product details are sent to you through WhatsApp.', 'oneclick-wa-order'); ?></p>
-                        </div>
-                        <div class="col">
-                            <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/images/fancy-floating-button.png'); ?>" alt="<?php esc_attr_e('Fancy Floating Button', 'oneclick-wa-order'); ?>" />
-                            <h3><?php esc_html_e('Fancy Floating Button', 'oneclick-wa-order'); ?></h3>
-                            <p><?php esc_html_e('Make it easy for any customers/visitors to reach you out through a click of a floating WhatsApp button, displayed on the left of right with tons of customization options.', 'oneclick-wa-order'); ?></p>
-                        </div>
-                    </div>
-                    <div class="feature-section two-col">
-                        <div class="col">
-                            <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/images/display-this-or-hide-that.png'); ?>" alt="<?php esc_attr_e('Display or Hide Elements', 'oneclick-wa-order'); ?>" />
-                            <h3><?php esc_html_e('Display This or Hide That', 'oneclick-wa-order'); ?></h3>
-                            <p><?php esc_html_e('Wanna hide some buttons or elements you don\'t like? You have the command to rule them all. Just visit the panel and all of the options are there to configure.', 'oneclick-wa-order'); ?></p>
-                        </div>
-                        <div class="col">
-                            <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/images/gdpr-ready.png'); ?>" alt="<?php esc_attr_e('GDPR Ready', 'oneclick-wa-order'); ?>" />
-                            <h3><?php esc_html_e('Make It GDPR-Ready', 'oneclick-wa-order'); ?></h3>
-                            <p><?php esc_html_e('The regulations are real and it\'s time to make your site ready for them. Make your site GDPR-ready with some simple configurations, really easy!', 'oneclick-wa-order'); ?></p>
-                        </div>
-                    </div>
-                    <div class="feature-section two-col">
-                        <div class="col">
-                            <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/images/shortcode.png'); ?>" alt="<?php esc_attr_e('Shortcode Generator', 'oneclick-wa-order'); ?>" />
-                            <h3><?php esc_html_e('Shortcode Generator', 'oneclick-wa-order'); ?></h3>
-                            <p><?php esc_html_e('Are the previous options still not enough for you? You can extend the flexibility to display a WhatsApp button using a shortcode, which you can generate easily.', 'oneclick-wa-order'); ?></p>
-                        </div>
-                        <div class="col">
-                            <img src="<?php echo esc_url(plugin_dir_url(dirname(__FILE__)) . 'assets/images/documentation.png'); ?>" alt="<?php esc_attr_e('Comprehensive Documentation', 'oneclick-wa-order'); ?>" />
-                            <h3><?php esc_html_e('Comprehensive Documentation', 'oneclick-wa-order'); ?></h3>
-                            <p><?php esc_html_e('You will not be left alone. My complete documentation or tutorial will always help and support all your needs to get started. Watch tutorial videos.', 'oneclick-wa-order'); ?></p>
-                        </div>
-                    </div>
-                    <br>
-                    <hr>
-                    <?php echo do_shortcode("[donate]"); ?>
-                    <center>
-                        <p><?php esc_html_e('Created with ❤ and ☕ in Jakarta, Indonesia by Walter Pinem', 'oneclick-wa-order'); ?></p>
-                    </center>
-                </div>
-            </div>
+        
+            
             <br>
     </div>
 <?php
         }
     }
 
-    // Donate button
-    function wa_order_donate_button_shortcode()
-    {
-        ob_start();
-?>
-<center>
-    <div class="donate-container">
-        <p><?php esc_html_e('To keep this plugin free, I spent cups of coffee building it. If you love and find it really useful for your business, you can always', 'oneclick-wa-order'); ?></p>
-        <a href="https://www.paypal.me/WalterPinem" target="_blank">
-            <button class="donatebutton">
-                ☕ <?php esc_html_e('Buy Me a Coffee', 'oneclick-wa-order'); ?>
-            </button>
-        </a>
-    </div>
-</center>
-<?php
-        return ob_get_clean();
-    }
-    add_shortcode('donate', 'wa_order_donate_button_shortcode');
+    
